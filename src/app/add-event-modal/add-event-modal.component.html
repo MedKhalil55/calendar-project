@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h2 class="modal-title">Add Event</h2>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancelClick()"></button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSaveClick()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" [(ngModel)]="newEvent.title" name="title" required>
+      </div>
+      <div class="mb-3">
+        <label for="startDateTime" class="form-label">Start Date & Time</label>
+        <input type="datetime-local" class="form-control" id="startDateTime" [(ngModel)]="newEvent.startDateTime" name="startDateTime" required>
+      </div>
+      <div class="mb-3">
+        <label for="endDateTime" class="form-label">End Date & Time</label>
+        <input type="datetime-local" class="form-control" id="endDateTime" [(ngModel)]="newEvent.endDateTime" name="endDateTime" required>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-secondary me-2" (click)="onCancelClick()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+  
