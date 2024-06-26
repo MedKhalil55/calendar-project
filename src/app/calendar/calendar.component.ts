@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEventModalComponent } from '../add-event-modal/add-event-modal.component';
 import { isSameDay, isSameMonth } from 'date-fns';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-calendar',
@@ -22,8 +22,15 @@ export class CalendarComponent {
   activeDayIsOpen = false;
   refresh = new Subject<void>();
 
+  
+
   constructor(public dialog: MatDialog) {
-    const event1 = {
+    this.initializeEvents();
+  }
+
+
+  initializeEvents() {
+   /* const event1 = {
       title: "cours",
       start: new Date("2024-06-20T10:30"),
       end: new Date("2024-06-20T16:30"),
@@ -31,7 +38,8 @@ export class CalendarComponent {
       resizable: {
         beforeStart: true,
         afterEnd: true,
-      }
+      },
+      color: { primary: '#1e90ff', secondary: '#D1E8FF' }
     };
     const event2 = {
       title: "cours de sport",
@@ -41,9 +49,10 @@ export class CalendarComponent {
       resizable: {
         beforeStart: true,
         afterEnd: true,
-      }
-    };
-    this.events.push(event1, event2);
+      },
+      color: { primary: '#32CD32', secondary: '#C3FDB8' }
+    };*/
+    //this.events.push(event1, event2);
   }
 
   setView(view: CalendarView): void {
@@ -61,8 +70,29 @@ export class CalendarComponent {
     }
   }
 
-  eventClicked(event: any): void {
-    console.log(event);
+  eventClicked({ event }: { event: CalendarEvent }): void {
+    const dialogRef = this.dialog.open(AddEventModalComponent, {
+      width: '400px',
+      data: { event: event }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.delete) {
+          this.events = this.events.filter(e => e !== event);
+        } else if (result.event) {
+          if (result.isEditMode) {
+            const index = this.events.findIndex(e => e === event);
+            if (index > -1) {
+              this.events[index] = result.event;
+            }
+          } else {
+            this.events.push(result.event);
+          }
+        }
+        this.refresh.next();
+      }
+    });
   }
 
   eventTimesChanged(event: any): void {
@@ -75,25 +105,14 @@ export class CalendarComponent {
   openModal(): void {
     const dialogRef = this.dialog.open(AddEventModalComponent, {
       width: '400px',
-      data: { title: '', start: new Date(), end: new Date() }
+      data: { event: null }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        const newEvent: CalendarEvent = {
-          title: result.title,
-          start: result.start,
-          end: result.end,
-          draggable: true,
-          resizable: {
-            beforeStart: true,
-            afterEnd: true
-          }
-        };
-        this.events.push(newEvent);
+      if (result && result.event) {
+        this.events.push(result.event);
         this.refresh.next();
       }
     });
   }
-
 }

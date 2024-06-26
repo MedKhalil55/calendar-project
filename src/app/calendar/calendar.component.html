@@ -37,5 +37,6 @@
       <mwl-calendar-week-view *ngSwitchCase="Calendarview.Week" [viewDate]="viewDate" [events]="events" locale="fr" (eventClicked)="eventClicked($event)" (eventTimesChanged)="eventTimesChanged($event)" [refresh]="refresh"></mwl-calendar-week-view>
       <mwl-calendar-day-view *ngSwitchCase="Calendarview.Day" [viewDate]="viewDate" [events]="events" locale="fr" (eventClicked)="eventClicked($event)" (eventTimesChanged)="eventTimesChanged($event)" [refresh]="refresh"></mwl-calendar-day-view>
     </span>
-  
+    <app-color-legend></app-color-legend>
   </div>
+  

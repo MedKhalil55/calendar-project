@@ -18,6 +18,10 @@ import { MatNativeDateModule } from '@angular/material/core'; // Import MatNativ
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule , NgxMatNativeDateModule} from '@angular-material-components/datetime-picker';
 import { CalendarComponent } from './calendar/calendar.component';
+import { ColorLegendComponent } from './color-legend/color-legend.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -38,7 +42,8 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
   declarations: [
     AppComponent,
     AddEventModalComponent,
-    CalendarComponent
+    CalendarComponent,
+    ColorLegendComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,8 @@ class CustomDateFormatter extends CalendarNativeDateFormatter {
     NgxMatDatetimePickerModule,
     NgxMatTimepickerModule,
     NgxMatNativeDateModule,
-    
+    ReactiveFormsModule,
+    HttpClientModule
  
     
     
